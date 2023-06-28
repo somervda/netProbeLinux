@@ -16,13 +16,12 @@ app = Flask(__name__)
 
 @app.route('/hostStatus')
 def getHostStatus():
-    print(hosts.getHostStatus())
+    hosts.loadHostsTests()
     return hosts.getHostStatus(), 200
 
 
 @app.route('/history/<start>/<id>/<type>')
 def getHistory( start, id, type):
-    gc.collect()
     return netLogger.getHistory(int(start), int(id), type), 200
 
 

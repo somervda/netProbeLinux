@@ -16,6 +16,7 @@ netLogger = NetLogger()
 appLogger = AppLogger()
 
 def scheduler(quiet=True):
+    hosts.buildHostsTests()
     while True:
         nextHostToTest = hosts.findNextHostToTest()
         host = hosts.getHost(nextHostToTest)
@@ -27,7 +28,7 @@ def scheduler(quiet=True):
             hostTests["pingActive"] = ping["active"]
             if ping["active"]:
                 if hostTests["lastPing"] + (ping["intervalMinutes"] * 60) < time.time():
-                    hostTests["lastPing"] = time.time()
+                    hostTests["lastPing"] = int(time.time())
                     pingResult = bing.getLowestPing(host["address"],quiet=quiet)
                     if pingResult == None:
                         hostTests["pingSuccess"] = False
@@ -44,7 +45,7 @@ def scheduler(quiet=True):
             hostTests["bingActive"] = bingTest["active"]
             if bingTest["active"]:
                 if hostTests["lastBing"] + (bingTest["intervalMinutes"] * 60) < time.time():
-                    hostTests["lastBing"] = time.time()
+                    hostTests["lastBing"] = int(time.time())
                     bingResult = bing.bing(
                         host["address"], maxSize=5000,quiet=quiet)
                     if bingResult[0] == -1:
@@ -63,7 +64,7 @@ def scheduler(quiet=True):
             hostTests["webActive"] = web["active"]
             if web["active"]:
                 if hostTests["lastWeb"] + (web["intervalMinutes"] * 60) < time.time():
-                    hostTests["lastWeb"] = time.time()
+                    hostTests["lastWeb"] = int(time.time())
                     if web["https"]:
                         target = "https://"
                     else:

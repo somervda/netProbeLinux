@@ -5,6 +5,7 @@ import os
 class Hosts:
     # hosts data
     HOSTS_FILE = "hosts.json"
+    HOSTSTESTS_FILE = "hostsTests.json"
     hosts = []
     maxId = 0
     # host test scheduling
@@ -13,7 +14,7 @@ class Hosts:
 
     def __init__(self):
         self.getHosts()
-        self.buildHostsTests()
+        # self.buildHostsTests()
 
     def file_or_dir_exists(self, filename):
         try:
@@ -30,6 +31,7 @@ class Hosts:
         self.hostsTests = []
         for host in self.hosts:
             self.addHostTests(host["id"])
+        self.saveHostsTests()
 
     def addHostTests(self, id):
         host = self.getHost(id)
@@ -49,6 +51,21 @@ class Hosts:
             if hostTests["id"] == updatedHostTests["id"]:
                 self.hostsTests.remove(hostTests)
                 self.hostsTests.append(updatedHostTests)
+        self.saveHostsTests()
+
+    def saveHostsTests(self):
+        # Write a copy of hosts tests data after each update
+        with open(self.HOSTSTESTS_FILE, "w") as hostsTestsFile:
+            hostsTestsFile.write(json.dumps(self.hostsTests))
+
+    def loadHostsTests(self):
+        # Read hosts tests data 
+        if self.file_or_dir_exists(self.HOSTSTESTS_FILE):
+            print("loadHostsTests Found")
+            with open(self.HOSTSTESTS_FILE, "r") as hostsTestsFile:
+                self.hostsTests = json.loads(hostsTestsFile.read())
+            print(self.hostsTests)
+        
 
     def getId(self, obj):
         return obj["id"]
