@@ -36,7 +36,7 @@ class NetLogger:
                 loggerLine = "{}\t{}\n".format(
                     int(time.time()), netLoggerRecord["rtl"])
             else:
-                loggerLine = "{}\t{}\n".format(time.time(), -1)
+                loggerLine = "{}\t{}\n".format(int(time.time()), -1)
         if type == "bing":
             loggerLine = "{}\t{}\t{}\n".format(
                 int(time.time()), netLoggerRecord["bps"], netLoggerRecord["rtl"])
@@ -135,7 +135,7 @@ class NetLogger:
                         while logline:
                             lineValues = logline.split("\t")
                             # Output a summary?
-                            timestamp = int(lineValues[0])
+                            timestamp = int(float(lineValues[0]))
                             value = int(lineValues[1])
                             if (summaryType == "H" and (timestamp - lastSummaryTime) > SECONDS_IN_HOUR) \
                                     or (summaryType == "D" and (timestamp - lastSummaryTime) > SECONDS_IN_DAY):

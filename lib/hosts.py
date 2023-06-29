@@ -46,6 +46,7 @@ class Hosts:
         return {}
 
     def updateHostTests(self, updatedHostTests):
+        self.loadHostsTests()
         # Updated a hostTests based on the updated host's id
         for hostTests in self.hostsTests:
             if hostTests["id"] == updatedHostTests["id"]:

@@ -6,6 +6,7 @@ from appLogger import AppLogger
 from netLogger import NetLogger
 import time
 from flask import Flask,send_file,request
+from flask_cors import CORS
 
 # Initialize class instances
 hosts = Hosts()
@@ -13,6 +14,7 @@ netLogger = NetLogger()
 appLogger = AppLogger()
 
 app = Flask(__name__)
+CORS(app, allowed_origins="*", allow_credentials=True)
 
 @app.route('/hostStatus')
 def getHostStatus():
@@ -32,8 +34,9 @@ def getHost( id):
 
 @app.post('/host/add')
 def addHost():
-    newHostId = hosts.addHost(request.get_json())
-    return str(newHostId), 200
+    newHost = hosts.addHost(request.get_json())
+    print("addHost",newHost)
+    return str(newHost), 200
 
 
 @app.post('/host/update')
@@ -69,7 +72,8 @@ def func():
 
 @app.after_request
 def func( response):
-    response.headers.update({"Access-Control-Allow-Origin": "*"})
+    if (request.method!="OPTIONS"):
+        response.headers.update({"Access-Control-Allow-Origin": "*"})
     return response
 
 
