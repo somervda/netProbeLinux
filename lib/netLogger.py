@@ -109,7 +109,7 @@ class NetLogger:
         lastSummaryTime = 0
 
         begin = startTimestamp
-        end = time.time()
+        end = int(time.time())
 
         hoursHistory = (end-begin)/SECONDS_IN_HOUR
         summaryType = "X"  # x = no summary
@@ -122,6 +122,7 @@ class NetLogger:
 
         # Read all the logger files in time range for the host and test type
         try:
+            print("getHistory:",startTimestamp,end)
             for fileDate in range(self.getStartOfDay(startTimestamp), end, SECONDS_IN_DAY):
                 localFileDate = time.localtime(fileDate)
                 logName = self.FILE_PREFIX + "nd{}{:0>2}{:0>2}{}{:0>3}.tab".format(
@@ -170,6 +171,7 @@ class NetLogger:
                 entries.append(entry)
             return entries
         except Exception as e:
+            print("getHistory e:",e)
             appLogger = AppLogger()
             appLogger.writeException(e)
             return entries

@@ -2,6 +2,7 @@ import os
 import time
 import io
 import sys
+import traceback
 
 
 
@@ -29,15 +30,15 @@ class AppLogger:
 
     def writeException(self, e):
         # Write appLog record using application exception object
-        s = io.StringIO()
-        sys.print_exception(e, s)
-        self.writeLogLine(s.getvalue())
+        # s = io.StringIO()
+        # traceback.print_exception(e, s)
+        self.writeLogLine(traceback.format_exc())
 
     def printException(self, e):
         # Print application exception object
-        s = io.StringIO()
-        sys.print_exception(e, s)
-        print(s.getvalue())
+        # s = io.StringIO()
+        # sys.print_exception(e, s)
+        print(traceback.format_exc())
 
     def getLog(self):
         with open(self.APPLOGFILE, "r") as logFile:

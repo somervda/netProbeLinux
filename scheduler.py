@@ -1,6 +1,6 @@
 
 import sys
-sys.path.append('lib')
+sys.path.append('/home/pi/netProbeLinux/lib')
 
 from hosts import Hosts
 from appLogger import AppLogger
@@ -87,6 +87,6 @@ def scheduler(quiet=True):
         time.sleep(5)
 
 if __name__ == '__main__':
-    appLogger.writeLogLine("* Restart *")
+    appLogger.writeLogLine("* Start Scheduler *")
     # Fire up scheduler to run forever
     scheduler(quiet=False)

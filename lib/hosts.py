@@ -14,7 +14,6 @@ class Hosts:
 
     def __init__(self):
         self.getHosts()
-        # self.buildHostsTests()
 
     def file_or_dir_exists(self, filename):
         try:
@@ -27,6 +26,7 @@ class Hosts:
     # hostsTests specific routines
 
     def buildHostsTests(self):
+        self.getHosts()
         # Build a new host tests array based on hosts data
         self.hostsTests = []
         for host in self.hosts:
@@ -61,10 +61,9 @@ class Hosts:
     def loadHostsTests(self):
         # Read hosts tests data 
         if self.file_or_dir_exists(self.HOSTSTESTS_FILE):
-            print("loadHostsTests Found")
             with open(self.HOSTSTESTS_FILE, "r") as hostsTestsFile:
                 self.hostsTests = json.loads(hostsTestsFile.read())
-            print(self.hostsTests)
+
         
 
     def getId(self, obj):
@@ -108,6 +107,7 @@ class Hosts:
             self.setMaxId()
 
     def getHost(self, id):
+        self.getHosts()
         for host in self.hosts:
             if host["id"] == id:
                 return(host)
@@ -126,17 +126,15 @@ class Hosts:
     def deleteHost(self, id):
         print("deleteHost:", id)
         for host in self.hosts:
-            print("Finding host", host["id"], id,  int(host["id"]) == int(id))
             if int(host["id"]) == int(id):
-                print("deleteHost found")
                 self.hosts.remove(host)
                 self.setMaxId()
                 self.writeHosts()
         # Also update hostsTests
         for hostTests in self.hostsTests:
             if int(hostTests["id"]) == int(id):
-                print("deleteHostTest found")
                 self.hostsTests.remove(hostTests)
+        self.saveHostsTests()
         return id
 
     def addHost(self, host):
@@ -146,6 +144,7 @@ class Hosts:
         self.writeHosts()
         # Also update hostsTests
         self.addHostTests(host["id"])
+        self.saveHostsTests()
         return int(host["id"])
 
     def writeHosts(self):

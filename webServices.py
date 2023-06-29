@@ -1,11 +1,11 @@
 import sys
-sys.path.append('lib')
+sys.path.append('/home/pi/netProbeLinux/lib')
 
 from hosts import Hosts
 from appLogger import AppLogger
 from netLogger import NetLogger
 import time
-from flask import Flask,send_file
+from flask import Flask,send_file,request
 
 # Initialize class instances
 hosts = Hosts()
@@ -32,13 +32,13 @@ def getHost( id):
 
 @app.post('/host/add')
 def addHost():
-    newHostId = hosts.addHost(request.json)
+    newHostId = hosts.addHost(request.get_json())
     return str(newHostId), 200
 
 
 @app.post('/host/update')
 def updateHost():
-    updatedHostId = hosts.updateHost(request.json)
+    updatedHostId = hosts.updateHost(request.get_json())
     return str(updatedHostId), 200
 
 
@@ -57,7 +57,7 @@ def log():
 def clearSysLog():
     appLogger = AppLogger()
     appLogger.clearLog()
-    appLogger.writeLogLine("Log Cleared " + str(gc.mem_free()))
+    appLogger.writeLogLine("Log Cleared ")
     return "OK", 200,  {'Content-Type': 'text/html'}
 
 
@@ -86,4 +86,5 @@ def net_probe_ui_static( path):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    appLogger.writeLogLine("* Start webServices *")
+    app.run(host='0.0.0.0',port=80)
