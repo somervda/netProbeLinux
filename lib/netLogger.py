@@ -113,10 +113,10 @@ class NetLogger:
 
         hoursHistory = (end-begin)/SECONDS_IN_HOUR
         summaryType = "X"  # x = no summary
-        if hoursHistory > 12 and hoursHistory < 49:
+        if hoursHistory >= 48 and hoursHistory < 120:
             summaryType = "H"
             lastSummaryTime = self.getStartOfHour(startTimestamp)
-        if hoursHistory > 49:
+        if hoursHistory >= 120:
             summaryType = "D"
             lastSummaryTime = self.getStartOfDay(startTimestamp)
 
