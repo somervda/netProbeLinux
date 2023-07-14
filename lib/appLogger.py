@@ -7,7 +7,7 @@ import traceback
 
 
 class AppLogger:
-    APPLOGFILE = "applog.txt"
+    APPLOGFILE = "data/applog.txt"
 
     def __init__(self):
         pass

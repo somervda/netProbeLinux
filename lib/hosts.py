@@ -4,8 +4,8 @@ import os
 
 class Hosts:
     # hosts data
-    HOSTS_FILE = "hosts.json"
-    HOSTSTESTS_FILE = "hostsTests.json"
+    HOSTS_FILE = "data/hosts.json"
+    HOSTSTESTS_FILE = "data/hostsTests.json"
     hosts = []
     maxId = 0
     # host test scheduling

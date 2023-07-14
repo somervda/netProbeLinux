@@ -6,7 +6,7 @@ from appLogger import AppLogger
 
 class NetLogger:
 
-    FILE_PREFIX = 'logger/'
+    FILE_PREFIX = 'data/logger/'
 
     def __init__(self):
         pass

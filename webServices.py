@@ -91,4 +91,4 @@ def net_probe_ui_static( path):
 
 if __name__ == '__main__':
     appLogger.writeLogLine("* Start webServices *")
-    app.run(host='0.0.0.0',port=80)
+    app.run(host='0.0.0.0',port=5000)
