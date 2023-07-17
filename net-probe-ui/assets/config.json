@@ -1,4 +1,4 @@
 {
-    "netProbeHost": "netprobe.home:5000",
+    "netProbeHost": "netprobe.home",
     "EPOCH_OFFSET": 0
 }

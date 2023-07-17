@@ -1,12 +1,11 @@
 import sys
-sys.path.append('/home/pi/netProbeLinux/lib')
-
 from hosts import Hosts
 from appLogger import AppLogger
 from netLogger import NetLogger
 import time
 from flask import Flask,send_file,request
 from flask_cors import CORS
+import logging
 
 # Initialize class instances
 hosts = Hosts()
@@ -90,5 +89,8 @@ def net_probe_ui_static( path):
 
 
 if __name__ == '__main__':
+
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
     appLogger.writeLogLine("* Start webServices *")
-    app.run(host='0.0.0.0',port=5000)
+    app.run(host='0.0.0.0',port=5000, debug=False)
