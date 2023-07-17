@@ -1,6 +1,15 @@
 #!/bin/bash
 
 # make and/or copy configui.json file
+if [ -f /data/config.json ]
+then
+    cp /data/config.json /app/net-probe-ui/assets/config.json
+    echo "Using /data/config.json to determine hosts and port info."
+else
+    cp /app/net-probe-ui/assets/config.json /data/config.json 
+    echo "config.json not found creating a new dummy one. Remember to update it for your host address and restart the container!"
+fi
+cat /app/net-probe-ui/assets/config.json
 
 # Make an empty hosts file is one doesn't exist
 if [ ! -f /data/hosts.json ]
